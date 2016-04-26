@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+install_mongo() {
+  local install_type=$1
+  local version=$2
+  local install_path=$3
+  local platform=""
+  local arch=""
+  local tempdir=""
+  local filename=""
+
+  [ "Linux" = "$(uname)" ] && platform="linux" || platform="osx"
+  [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || arch="i686"
+  [ "linux" = "${platform}" ] && tempdir=$(mktemp -d asdf-mongodb.XXXX) || tempdir=$(mktemp -dt asdf-mongodb)
+
+  if [[ "linux" = "${platform}" ]]
+  then
+    filename="mongodb-linux-${arch}-${version}.tgz"
+  else
+    filename="mongodb-osx-x86_64-${version}.tgz"
+  fi
+
+  curl -L "http://downloads.mongodb.org/${platform}/${filename}" -o "${tempdir}/${filename}"
+  tar zxf "${tempdir}/${filename}" -C $install_path --strip-components=1 || exit 1
+
+  rm -rf "${tempdir}"
+}
+
+install_mongo $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
