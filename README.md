@@ -1,4 +1,4 @@
-# asdf-mongodb
+# asdf-mongodb [![Build Status](https://travis-ci.org/sylph01/asdf-mongodb.svg?branch=master)](https://travis-ci.org/sylph01/asdf-mongodb)
 
 [MongoDB](https://www.mongodb.org) binary plugin for [asdf](https://github.com/asdf-vm/asdf)
 
