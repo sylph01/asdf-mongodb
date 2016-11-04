@@ -31,4 +31,4 @@ asdf plugin-add mongodb https://github.com/sylph01/asdf-mongodb.git
 
 ## Use
 
-Check [asdf](https://github.com/asdf-vm/asdf) readme for instructions on how to install & manage versions of DMD.
+Check [asdf](https://github.com/asdf-vm/asdf) readme for instructions on how to install & manage versions of MongoDB.
