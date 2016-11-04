@@ -314,3 +314,5 @@ for version in "${versions_list[@]}"
 do
   versions="${versions} ${version}"
 done
+
+echo $versions
