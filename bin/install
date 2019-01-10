@@ -7,7 +7,9 @@ install_mongo() {
   local platform=""
   local arch=""
   local tempdir=""
+  local tempfile=""
   local filename=""
+  local download_url=""
 
   [ "Linux" = "$(uname)" ] && platform="linux" || platform="osx"
   [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || arch="i686"
@@ -17,11 +19,14 @@ install_mongo() {
   then
     filename="mongodb-linux-${arch}-${version}.tgz"
   else
-    filename="mongodb-osx-x86_64-${version}.tgz"
+    filename="mongodb-osx-ssl-x86_64-${version}.tgz"
   fi
 
-  curl -L "http://downloads.mongodb.org/${platform}/${filename}" -o "${tempdir}/${filename}"
-  tar zxf "${tempdir}/${filename}" -C $install_path --strip-components=1 || exit 1
+  tempfile="${tempdir}/${filename}"
+  download_url="https://fastdl.mongodb.org/${platform}/${filename}"
+
+  curl -L "${download_url}" -o "${tempfile}"
+  tar zxf "${tempfile}" -C $install_path --strip-components=1 || exit 1
 
   rm -rf "${tempdir}"
 }
