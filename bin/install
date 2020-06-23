@@ -19,7 +19,7 @@ install_mongo() {
   then
     filename="mongodb-linux-${arch}-${version}.tgz"
   else
-    filename="mongodb-osx-ssl-x86_64-${version}.tgz"
+    filename="mongodb-macos-x86_64-${version}.tgz"
   fi
 
   tempfile="${tempdir}/${filename}"
