@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+function unify_version {
+  printf "%03d%03d%03d" $(echo "$1"| sed -e 's/-rc[0-9]//' | tr '.' ' ');
+}
 
 install_mongo() {
   local install_type=$1
@@ -15,15 +18,22 @@ install_mongo() {
   [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || arch="i686"
   [ "linux" = "${platform}" ] && tempdir=$(mktemp -d asdf-mongodb.XXXX) || tempdir=$(mktemp -dt asdf-mongodb.XXXX)
 
-  if [[ "linux" = "${platform}" ]]
-  then
+  if [[ "linux" = "${platform}" ]]; then
     filename="mongodb-linux-${arch}-${version}.tgz"
   else
-    filename="mongodb-macos-x86_64-${version}.tgz"
+    if [[ "$(unify_version "$version")" > "$(unify_version "4.2")" ]]; then
+      filename="mongodb-macos-x86_64-${version}.tgz"
+    elif [[ "$(unify_version "$version")" < "$(unify_version "3.6")" ]]; then
+      filename="mongodb-osx-x86_64-${version}.tgz"
+    else
+      filename="mongodb-osx-ssl-x86_64-${version}.tgz"
+    fi
   fi
 
   tempfile="${tempdir}/${filename}"
   download_url="https://fastdl.mongodb.org/${platform}/${filename}"
+
+  echo "download_url $download_url"
 
   curl -L "${download_url}" -o "${tempfile}"
   tar zxf "${tempfile}" -C $install_path --strip-components=1 || exit 1
