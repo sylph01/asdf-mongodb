@@ -23,7 +23,7 @@ install_mongo() {
   else
     if [[ "$(unify_version "$version")" > "$(unify_version "4.2")" ]]; then
       filename="mongodb-macos-x86_64-${version}.tgz"
-    elif [[ "$(unify_version "$version")" < "$(unify_version "3.6")" ]]; then
+    elif [[ "$(unify_version "$version")" < "$(unify_version "3.0")" ]]; then
       filename="mongodb-osx-x86_64-${version}.tgz"
     else
       filename="mongodb-osx-ssl-x86_64-${version}.tgz"
