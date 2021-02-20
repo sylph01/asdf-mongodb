@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+function unify_version {
+  printf "%03d%03d%03d" $(echo "$1"| sed -e 's/-rc[0-9]//' | tr '.' ' ');
+}
+
+testvercomp () {
+  if [[ "$(unify_version "$1")" > "$(unify_version "$2")" ]]
+  then
+    result='>'
+  elif [[ "$(unify_version "$1")" < "$(unify_version "$2")" ]]
+  then
+    result='<'
+  else
+    result='='
+  fi
+
+  if [[ $result != "$3" ]]
+  then
+      echo "FAIL: Expected '$3', Actual '$result', Arg1 '$1', Arg2 '$2'"
+  else
+      echo "Pass: '$1 $result $2'"
+  fi
+}
+
+echo "The following tests should pass"
+testvercomp '1'            '1'            '='
+testvercomp '2.1'          '2.2'          '<'
+testvercomp '3.0.4-rc0'    '3.0.4'        '='
+testvercomp '4.8-rc1'      '4.8-rc0'      '='
+testvercomp '3.2.1'        '3.2'          '>'
+testvercomp '3.2'          '3.2.1'        '<'
+testvercomp '1.2'          '2.1'          '<'
+testvercomp '2.1'          '1.2'          '>'
+testvercomp '5.6.7'        '5.6.7'        '='
+testvercomp '1.01.1'       '1.1.1'        '='
+testvercomp '1.1.1'        '1.01.1'       '='
+testvercomp '1'            '1.0'          '='
+testvercomp '1.0'          '1'            '='
+testvercomp '1.0.2'        '1.0.2'        '='
+testvercomp '1..0'         '1.0'          '='
+testvercomp '1.0'          '1..0'         '='
