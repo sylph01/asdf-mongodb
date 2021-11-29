@@ -17,7 +17,7 @@ install_mongo() {
 
   if [[ "linux" = "${platform}" ]]
   then
-    filename="mongodb-linux-${arch}-${version}.tgz"
+    filename="mongodb-linux-${arch}-ubuntu2004-${version}.tgz"
   else
     filename="mongodb-macos-x86_64-${version}.tgz"
   fi
