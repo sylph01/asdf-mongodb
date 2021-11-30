@@ -1,5 +1,5 @@
 language: c
-script: asdf plugin-test mongodb https://github.com/sylph01/asdf-mongodb.git
+script: asdf plugin-test mongodb https://github.com/joshburnsxyz/asdf-mongodb.git
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
