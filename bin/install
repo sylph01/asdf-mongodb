@@ -21,8 +21,10 @@ install_mongo() {
   if [[ "linux" = "${platform}" ]]; then
     filename="mongodb-linux-${arch}-${version}.tgz"
   else
-    if [[ "$(unify_version "$version")" > "$(unify_version "4.2")" ]]; then
+    if [[ "$(unify_version "$version")" > "$(unify_version "5.0.21")" ]]; then
       filename="mongodb-macos-${arch}-${version}.tgz"
+    elif [[ "$(unify_version "$version")" > "$(unify_version "4.2")" ]]; then
+      filename="mongodb-macos-x86_64-${version}.tgz"
     elif [[ "$(unify_version "$version")" < "$(unify_version "3.0")" ]]; then
       filename="mongodb-osx-x86_64-${version}.tgz"
     else
