@@ -15,13 +15,15 @@ install_mongo() {
   local download_url=""
 
   [ "Linux" = "$(uname)" ] && platform="linux" || platform="osx"
-  [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || arch="i686"
+  [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || [ "arm64" = "$(uname -m)" ] && arch="arm64" || arch="i686"
   [ "linux" = "${platform}" ] && tempdir=$(mktemp -d asdf-mongodb.XXXX) || tempdir=$(mktemp -dt asdf-mongodb.XXXX)
 
   if [[ "linux" = "${platform}" ]]; then
     filename="mongodb-linux-${arch}-${version}.tgz"
   else
-    if [[ "$(unify_version "$version")" > "$(unify_version "4.2")" ]]; then
+    if [[ "$(unify_version "$version")" > "$(unify_version "5.0.21")" ]]; then
+      filename="mongodb-macos-${arch}-${version}.tgz"
+    elif [[ "$(unify_version "$version")" > "$(unify_version "4.2")" ]]; then
       filename="mongodb-macos-x86_64-${version}.tgz"
     elif [[ "$(unify_version "$version")" < "$(unify_version "3.0")" ]]; then
       filename="mongodb-osx-x86_64-${version}.tgz"
